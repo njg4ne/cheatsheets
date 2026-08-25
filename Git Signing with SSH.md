@@ -15,7 +15,11 @@ Use or create an ssh key.
 ```bash
 ssh-keygen -f ~/.ssh/this-key-must-exist
 ```
-Optionally, undo previous signing setting.
+Copy from here the **public** key to your GitHub account **twice** (once for auth & once for signing).
+```bash
+cat ~/.ssh/this-key-must-exist.pub
+```
+Optionally, undo previous signing settings.
 ```bash
 git config --global --unset gpg.format
 ```
