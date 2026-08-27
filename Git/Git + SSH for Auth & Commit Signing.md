@@ -1,4 +1,9 @@
 ## Setup
+If not already done, set the global email and name to yours or git will complain as soon as the next step.
+```bash
+git config --global user.email "specific-email@example.com"
+git config --global user.name "A Name"
+```
 Make a scratch repo for testing.
 ```bash
 mkdir -p ~/test-repo-for-ssh-git-signing
@@ -18,6 +23,21 @@ Copy from here the **public** key to your GitHub account **twice** (once for aut
 ```bash
 cat ~/.ssh/this-key-must-exist.pub
 ```
+Configure git to use this key for authentication (probably by editing `~/.ssh/config` text file) to contain:
+```text
+Host github.com
+	HostName github.com
+	User git
+	IdentityFile ~/.ssh/this-key-must-exist
+```
+Test with:
+```bash
+ssh -T github.com
+```
+Hope to see:
+```text
+Hi <github-username>! You've successfully authenticated, but GitHub does not provide shell access.
+```
 Optionally, undo previous signing settings.
 ```bash
 git config --global --unset gpg.format
@@ -34,11 +54,6 @@ git config --global user.signingkey ~/.ssh/this-key-must-exist
 Tell git to always sign commits.
 ```bash
 git config --global commit.gpgsign true
-```
-Set the global email and name
-```bash
-git config --global user.email "specific-email@example.com"
-git config --global user.name "A Name"
 ```
 Point git to an allowedsigners ssh file. 
 ```bash
